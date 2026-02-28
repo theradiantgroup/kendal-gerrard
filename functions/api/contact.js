@@ -11,10 +11,11 @@ export async function onRequestPost(context) {
   };
 
   try {
-    const { name, email, subject, message } = await request.json();
+    const { first_name, last_name, email, subject, message } = await request.json();
+    const name = `${first_name} ${last_name}`.trim();
 
     // Validate required fields
-    if (!name || !email || !subject || !message) {
+    if (!first_name || !last_name || !email || !subject || !message) {
       return new Response(
         JSON.stringify({ error: 'All fields are required.' }),
         { status: 400, headers }
