@@ -70,45 +70,5 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.overflow = '';
   }
 
-  // Contact form handling
-  const contactForm = document.getElementById('contact-form');
-  const formStatus = document.getElementById('form-status');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const formData = new FormData(contactForm);
-      const data = Object.fromEntries(formData);
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-      formStatus.textContent = '';
-      formStatus.className = 'form-status';
-
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          formStatus.textContent = 'Thank you! Your message has been sent.';
-          formStatus.classList.add('success');
-          contactForm.reset();
-        } else {
-          throw new Error('Failed to send');
-        }
-      } catch (err) {
-        formStatus.textContent = 'Something went wrong. Please try again or email directly.';
-        formStatus.classList.add('error');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit';
-      }
-    });
-  }
 
 });
